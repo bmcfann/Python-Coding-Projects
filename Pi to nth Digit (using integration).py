@@ -19,24 +19,48 @@ def integrate(a, b):
     return sums
     
 def pi_to_nth_digit():
-    mth_Digit_String = input("Enter nth digit of pi desired: ")      #this line and the line below take the input from the user and transform it into an integer
-    mth_Digit = int(mth_Digit_String)
+    mth_Digit_String = input("Enter integer between 1 and 10: ")            #this line takes user input
     
-    c = 2 * integrate(-1,1)                                          #calls integrate function and since integrate function returns ~pi/2, we mult by 2
+    index1 = mth_Digit_String.find(".")                                     #this line detects if the input contains a decimal
     
-    c_string = str(c)                                                #turns c into a string
-    c_mth_decimals_only = c_string[2:1+mth_Digit]                    #slices the string c into only the numbers of pi AFTER the decimal
+    if (float(mth_Digit_String) < 1 or float(mth_Digit_String) > 10):
+        print("Outside range; try again")                                   #if the number is outside (1,10), function is called again to restart process
+        pi_to_nth_digit()
+        
+    elif (index1 != -1):
+        print("Decimal detected, number rounded down to nearest integer")
+        f_mth = float(mth_Digit_String)                                                   #converts to float to not lose info then truncates using int typecast
+        mth_Digit = int(f_mth)
     
-    c_trun_pi = "3." + c_mth_decimals_only                           #adds, as a string, the "3." in front of the decimals of pi
+        c = 2 * integrate(-1,1)                                                           #calls integrate function and since integrate function returns ~pi/2, we mult by 2
     
-    print(c_trun_pi)
+        c_string = str(c)                                                                 #turns c into a string
+        c_mth_decimals_only = c_string[2:1+mth_Digit]                                     #slices the string c into only the numbers of pi AFTER the decimal
+    
+        c_trun_pi = "pi to " + str(mth_Digit) + " digits: 3." + c_mth_decimals_only       #adds, as a string, the "3." in front of the decimals of pi
+    
+        print(c_trun_pi)
+        
+    else:
+    
+        mth_Digit = int(mth_Digit_String) 
+    
+        c = 2 * integrate(-1,1) 
+    
+        c_string = str(c) 
+        c_mth_decimals_only = c_string[2:1+mth_Digit] 
+    
+        c_trun_pi = "pi to " + str(mth_Digit) + " digits: 3." + c_mth_decimals_only 
+    
+        print(c_trun_pi)
+
     
 #----------- main below -------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def main():
-    #call functions and stuff here (main "method")                   #!!!!!!!!!!!!!!!!!!!!!!!!---------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!
-    pi_to_nth_digit()                                                #INCLUDING THE "3.", ONLY PRINTS ACCURATELY TO 10TH DIGIT, I.E., "3.141592653"
-                                                                     #!!!!!!!!!!!!!!!!!!!!!!!!---------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #call functions and stuff here (main "method") 
+    pi_to_nth_digit() 
+    
     #S = 2 * integrate(-1,1)
     #print(S)
 
